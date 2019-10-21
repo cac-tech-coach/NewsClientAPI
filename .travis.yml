@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+- node
+deploy:
+- skip_cleanup: true
+  provider: script
+  script: npm run build && npm run gh-pages
+  on:
+    branch: master
+- skip_cleanup: true
+  provider: script
+  script: npm run build && npm run gh-pages -- -p "$TRAVIS_BRANCH"
+  on:
+    all_branches: true
+    condition: '"$TRAVIS_BRANCH" != "master" && "$TRAVIS_BRANCH" != "gh-pages"'
+env:
+  global:
+    secure: Jo6PENkYL50yH4IRbWAz9uKqa1nSO3qfR+jNhWABEY9jUrZqkMIW+y/v8cTTsiylcqOhpmrBGNkFClLLaejAew2sqBaJ5+uIsUPTbIuCHxur5dIBZjjDYADeA1q4XYWz+6AdHgc3813O8EjMVpBG7eNfFE6ZWBOvBQf0wEpPS19PxrmwTLXcJ//15cLFuDjg3dteEJ2OZeAWuANtT8t0/MXz7RD9LH6HpvYIs1ty6FVBAvb+uRb8Nr5lXgSnRIu+bI1yxeawaWkTGS0cZZEX8Vs55KHi6t2txD9phX7koJtwq/Ic3RpgxkWgK6+THeIq5F4JEk9SGTanXNQ4YMqO7zYz95onnEbd1Jezm3UM52yEEtiwFqadYBD6lnPhBafOIB9pYUkD8Llp/DEvde4k4r2AgvqtZDGI+3bgagXcu4Vjpv1AIF6DstySzPO2JPQC9DSrLgNTRrwQViw9ZqAL0FcXqHz3FGtrEyrq5Nv5xahGwtCE597ymi5RMad5KvKru085VpnIDBWfZG8opS/JNlGbJd+MEMCUQkMgfY+IlCDHK5zxGcZgXJ8PRQgAY+tMPxLjzvOOfXpgrb08QmzmOoax0CciC+RhibXLOgkGVAGNpH84fwPamF9EfJt8rDXqzL9veYP7pcVlRxniCuToBqnoTpQRmA50Y389n4YKQR8=
