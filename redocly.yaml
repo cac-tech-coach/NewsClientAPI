@@ -1,0 +1,8 @@
+
+apiTitle: NewsClient
+splitSpec: false
+codeSamples: true
+swaggerUI: true
+travis: true
+repo: cac-tech-coach/NewsClientAPI
+oasVersion: 3.0.0
