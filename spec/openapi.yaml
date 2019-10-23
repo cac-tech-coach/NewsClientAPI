@@ -18,7 +18,7 @@ info:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
   x-logo:
-    url: 'https://apis.guru/openapi-template/logo.png'
+    url: 'https://www.openapis.org/wp-content/uploads/sites/3/2018/02/OpenAPI_Logo_Pantone-1.png'
   
   # Describe your API here, you can use GFM (https://guides.github.com/features/mastering-markdown) here
   description: |
@@ -65,7 +65,6 @@ paths:
                   data:
                     type: array
                     items:
-                      minLength: 4
                       $ref: '#/components/schemas/Type'
   /news/list:
     get:
