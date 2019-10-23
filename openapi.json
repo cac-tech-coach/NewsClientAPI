@@ -2,319 +2,212 @@
   "openapi": "3.0.0",
   "info": {
     "version": "1.0.0",
-    "title": "Example.com",
-    "termsOfService": "https://example.com/terms/",
-    "contact": {
-      "email": "contact@example.com",
-      "url": "http://example.com/contact"
-    },
+    "title": "头版新闻",
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
     "x-logo": {
-      "url": "https://apis.guru/openapi-template/logo.png"
+      "url": "https://www.openapis.org/wp-content/uploads/sites/3/2018/02/OpenAPI_Logo_Pantone-1.png"
     },
-    "description": "This is an **example** API to demonstrate features of OpenAPI specification\n# Introduction\nThis specification is intended to to be a good starting point for describing your API in \n[OpenAPI/Swagger format](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md).\nIt also demonstrates features of [generator-openapi-repo](https://github.com/Rebilly/generator-openapi-repo) tool and \n[ReDoc](https://github.com/Rebilly/ReDoc) documentation engine. So beyond the standard OpenAPI syntax we use a few \n[vendor extensions](https://github.com/Rebilly/ReDoc/blob/master/docs/redoc-vendor-extensions.md).\n\n# OpenAPI Specification\nThe goal of The OpenAPI Specification is to define a standard, language-agnostic interface to REST APIs which\nallows both humans and computers to discover and understand the capabilities of the service without access to source\ncode, documentation, or through network traffic inspection. When properly defined via OpenAPI, a consumer can \nunderstand and interact with the remote service with a minimal amount of implementation logic. Similar to what\ninterfaces have done for lower-level programming, OpenAPI removes the guesswork in calling the service.\n"
-  },
-  "externalDocs": {
-    "description": "Find out how to create Github repo for your OpenAPI spec.",
-    "url": "https://github.com/Rebilly/generator-openapi-repo"
+    "description": "头版新闻服务的 API 文档\n"
   },
   "tags": [
     {
-      "name": "Echo",
-      "description": "Example echo operations"
+      "name": "Type",
+      "description": "新闻栏目相关"
     },
     {
-      "name": "User",
-      "description": "Operations about user"
+      "name": "List",
+      "description": "新闻列表相关"
     }
   ],
   "servers": [
     {
-      "url": "http://example.com/api/v1"
-    },
-    {
-      "url": "https://example.com/api/v1"
+      "url": "http://139.198.4.126:8080"
     }
   ],
   "paths": {
-    "/users/{username}": {
-      "parameters": [
-        {
-          "name": "pretty_print",
-          "in": "query",
-          "description": "Pretty print response",
-          "schema": {
-            "type": "boolean"
-          }
-        }
-      ],
+    "/news/type": {
       "get": {
         "tags": [
-          "User"
+          "Type"
         ],
-        "summary": "Get user by user name",
-        "description": "Some description of the operation. \nYou can use `markdown` here.\n",
-        "operationId": "getUserByName",
-        "parameters": [
-          {
-            "name": "username",
-            "in": "path",
-            "description": "The name that needs to be fetched",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "with_email",
-            "in": "query",
-            "description": "Filter users without email",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "security": [
-          {
-            "main_auth": [
-              "read:users"
-            ]
-          },
-          {
-            "api_key": []
-          }
-        ],
+        "summary": "获取新闻栏目",
+        "operationId": "getNewsType",
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
-                },
-                "example": {
-                  "username": "user1",
-                  "email": "user@example.com"
+                  "type": "object",
+                  "properties": {
+                    "state": {
+                      "description": "返回的状态，始终为true",
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Type"
+                      }
+                    }
+                  }
                 }
               }
             }
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "User not found"
           }
-        }
-      },
-      "put": {
-        "tags": [
-          "User"
-        ],
-        "summary": "Updated user",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "updateUser",
-        "parameters": [
-          {
-            "name": "username",
-            "in": "path",
-            "description": "The name that needs to be updated",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "security": [
-          {
-            "main_auth": [
-              "write:users"
-            ]
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Invalid user supplied"
-          },
-          "404": {
-            "description": "User not found"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            }
-          },
-          "description": "Updated user object",
-          "required": true
         }
       }
     },
-    "/echo": {
-      "post": {
-        "tags": [
-          "Echo"
-        ],
-        "summary": "Echo test",
-        "description": "Receive the exact message you've sent",
-        "operationId": "echo",
-        "security": [
+    "/news/list": {
+      "get": {
+        "parameters": [
           {
-            "api_key": []
+            "name": "id",
+            "required": false,
+            "in": "query",
+            "description": "新闻栏目 id",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
           },
           {
-            "basic_auth": []
+            "name": "index",
+            "required": true,
+            "in": "query",
+            "description": "新闻列表的野马编号",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
           }
         ],
+        "tags": [
+          "List"
+        ],
+        "summary": "获取新闻列表",
+        "operationId": "getNewsList",
         "responses": {
           "200": {
-            "description": "OK",
-            "headers": {
-              "X-Rate-Limit": {
-                "description": "calls per hour allowed by the user",
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              },
-              "X-Expires-After": {
-                "$ref": "#/components/headers/ExpiresAfter"
-              }
-            },
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string"
-                },
-                "examples": {
-                  "response": {
-                    "value": "Hello world!"
+                  "type": "object",
+                  "properties": {
+                    "state": {
+                      "description": "返回的状态，始终为true",
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "msg": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/List"
+                    }
                   }
                 }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "text/csv": {
-                "schema": {
-                  "type": "string"
-                }
               }
             }
           }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "string",
-                "example": "Hello world!"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "type": "string",
-                "example": "Hello world!"
-              }
-            }
-          },
-          "description": "Echo payload",
-          "required": true
-        },
-        "x-code-samples": [
-          {
-            "lang": "C#",
-            "source": "API.v1.Echo echo = new API.v1.Echo();\necho.message = \"Hello World!\");\nEchoResponse response = echo.post();\nif (response.statusCode == HttpStatusCode.Created)\n{\n  // Success\n}\nelse\n{\n  // Something wrong -- check response for errors\n  Console.WriteLine(response.getRawResponse());\n}\n"
-          },
-          {
-            "lang": "PHP",
-            "source": "$form = new \\API\\Entities\\Echo();\n$form->setMessage(\"Hello World!\");\ntry {\n    $pet = $client->echo()->post($form);\n} catch (UnprocessableEntityException $e) {\n    var_dump($e->getErrors());\n}\n"
-          }
-        ]
+        }
       }
     }
   },
   "components": {
     "schemas": {
-      "Email": {
-        "description": "User email address",
-        "type": "string",
-        "format": "test",
-        "example": "john.smith@example.com"
-      },
-      "User": {
+      "Type": {
         "type": "object",
+        "required": [
+          "id",
+          "title",
+          "order"
+        ],
         "properties": {
-          "username": {
-            "description": "User supplied username",
-            "type": "string",
-            "minLength": 4,
-            "example": "John78"
+          "id": {
+            "description": "栏目 id",
+            "type": "integer",
+            "example": 1
           },
-          "firstName": {
-            "description": "User first name",
+          "title": {
+            "description": "栏目标题",
             "type": "string",
-            "minLength": 1,
-            "example": "John"
+            "example": "头条"
           },
-          "lastName": {
-            "description": "User last name",
-            "type": "string",
-            "minLength": 1,
-            "example": "Smith"
-          },
-          "email": {
-            "$ref": "#/components/schemas/Email"
+          "order": {
+            "description": "栏目次序编号",
+            "type": "integer",
+            "example": 1
           }
         }
-      }
-    },
-    "headers": {
-      "ExpiresAfter": {
-        "description": "date in UTC when token expires",
-        "schema": {
-          "type": "string",
-          "format": "date-time"
-        }
-      }
-    },
-    "securitySchemes": {
-      "main_auth": {
-        "type": "oauth2",
-        "flows": {
-          "implicit": {
-            "authorizationUrl": "http://example.com/api/oauth/dialog",
-            "scopes": {
-              "read:users": "read users info",
-              "write:users": "modify or remove users"
+      },
+      "List": {
+        "type": "array",
+        "maxItems": 10,
+        "items": {
+          "type": "object",
+          "required": [
+            "uniquekey",
+            "title",
+            "date",
+            "author_name",
+            "url"
+          ],
+          "properties": {
+            "uniquekey": {
+              "description": "新闻条目的全局唯一key",
+              "type": "string",
+              "example": "f27589a0ea4ff36cdfc8b4b03693bbde"
+            },
+            "title": {
+              "description": "新闻条目的标题",
+              "type": "string",
+              "example": "王中王！德约一稳定江山，大满贯稳步追赶或成最终赢家"
+            },
+            "date": {
+              "description": "新闻条目的发表时间",
+              "type": "string",
+              "format": "date-time",
+              "example": "2019-07-15 10:50"
+            },
+            "author_name": {
+              "description": "新闻条目的来源",
+              "type": "string",
+              "example": "胖哥体育"
+            },
+            "url": {
+              "description": "新闻条目的详情页面的完整 url",
+              "type": "string",
+              "format": "url",
+              "example": "http://mini.eastday.com/mobile/190715105025650.html"
+            },
+            "thumbnail_pic_s": {
+              "description": "新闻条目的缩略图1的相对路径，需要和 baseURL 拼接",
+              "type": "string",
+              "example": "20190715105025_878317e185cc8776106d73d76be366c6_3_mwpm_03200403.jpg"
+            },
+            "thumbnail_pic_s02": {
+              "description": "新闻条目的缩略图1的相对路径，需要和 baseURL 拼接",
+              "type": "string",
+              "example": "20190715105025_878317e185cc8776106d73d76be366c6_2_mwpm_03200403.jpg"
+            },
+            "thumbnail_pic_s03": {
+              "description": "新闻条目的缩略图1的相对路径，需要和 baseURL 拼接",
+              "type": "string",
+              "example": "20190715105025_878317e185cc8776106d73d76be366c6_1_mwpm_03200403.jpg"
             }
           }
         }
-      },
-      "api_key": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "api_key"
-      },
-      "basic_auth": {
-        "type": "http",
-        "scheme": "basic"
       }
     }
   }
