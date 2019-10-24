@@ -48,14 +48,14 @@ paths:
         - name: id
           required: false
           in: query
-          description: 新闻栏目 id
+          description: 新闻栏目 id，不指定则返回头条栏目的新闻
           schema:
             type: integer
             example: 1
         - name: index
-          required: true
+          required: false
           in: query
-          description: 新闻列表的野马编号
+          description: 新闻列表的页面编号，不指定则返回全部新闻
           schema:
             type: integer
             example: 1
