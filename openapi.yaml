@@ -32,10 +32,11 @@ paths:
                 type: object
                 properties:
                   state:
-                    description: 返回的状态，始终为true
+                    description: 返回的状态，成功为true，出现错误为 false
                     type: boolean
                     example: true
                   msg:
+                    description: 错误消息，成功为""，出现错误则为错误信息
                     type: string
                     example: ''
                   data:
@@ -55,7 +56,7 @@ paths:
         - name: index
           required: false
           in: query
-          description: 新闻列表的页面编号，不指定则返回全部新闻
+          description: 新闻列表的页面编号(第一页编号为0)，不指定则返回全部新闻
           schema:
             type: integer
             example: 1
@@ -108,7 +109,6 @@ components:
           example: 1
     List:
       type: array
-      maxItems: 10
       items:
         type: object
         required:
@@ -127,7 +127,7 @@ components:
             type: string
             example: 王中王！德约一稳定江山，大满贯稳步追赶或成最终赢家
           date:
-            description: 新闻条目的发表时间
+            description: '新闻条目的发表时间，格式为"yyyy-MM-dd HH:mm"'
             type: string
             format: date-time
             example: '2019-07-15 10:50'
