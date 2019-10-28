@@ -104,13 +104,19 @@
                   "type": "object",
                   "properties": {
                     "state": {
-                      "description": "返回的状态，始终为true",
+                      "description": "返回的状态，成功为true，出现错误为 false",
                       "type": "boolean",
                       "example": true
                     },
                     "msg": {
+                      "description": "错误消息，成功为\"\"，出现错误则为错误信息",
                       "type": "string",
-                      "example": ""
+                      "example": "index overflow"
+                    },
+                    "totalCount": {
+                      "description": "当前刷新的新闻总条数",
+                      "type": "integer",
+                      "example": 30
                     },
                     "data": {
                       "$ref": "#/components/schemas/List"
