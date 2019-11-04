@@ -24,6 +24,7 @@ jobs:
 
     - name: Publish github pages
       run: |
+        echo $GH_TOKEN
         npm install
         npm run build
         npm test
