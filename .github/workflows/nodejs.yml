@@ -17,6 +17,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
+
     - name: Config git
       run: |
         git config --local user.email "qinyusuain@gmail.com"
@@ -24,7 +25,7 @@ jobs:
 
     - name: Publish github pages
       run: |
-        echo $GH_TOKEN
+        echo ${{ secrets.ACCESS_TOKEN }}
         npm install
         npm run build
         npm test
