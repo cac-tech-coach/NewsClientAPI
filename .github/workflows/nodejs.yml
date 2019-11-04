@@ -6,29 +6,16 @@ on:
       - master 
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout
-      uses: actions/checkout@master
+      - name: Checkout
+        uses: actions/checkout@master
 
-    - name: Use Node.js v12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: '12.x'
-
-    - name: Config git
-      run: |
-        git config --local user.email "qinyusuain@gmail.com"
-        git config --local user.name "qinyu"
-
-    - name: Publish github pages
-      run: |
-        echo ${{ secrets.ACCESS_TOKEN }}
-        npm install
-        npm run build
-        npm test
-        npm run gh-pages
-      env:
-        GH_TOKEN: ${{ secrets.ACCESS_TOKEN }} 
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@2.0.3
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BASE_BRANCH: master
+          BRANCH: gh-pages
+          BUILD_SCRIPT: npm install && npm run build && npm test
