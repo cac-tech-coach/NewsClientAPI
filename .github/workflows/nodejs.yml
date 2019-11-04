@@ -4,25 +4,21 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [8.x, 10.x, 12.x]
-
+    
     steps:
     - name: Checkout
       uses: actions/checkout@master
 
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '12.x'
     - name: npm install, build, and test
       run: |
+        npm install
         npm run build
         npm test
         npm run ghpages
       env:
-        CI: true
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
